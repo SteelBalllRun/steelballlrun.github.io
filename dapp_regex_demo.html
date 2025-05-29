@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0043)https://dapp.uponup.cn/dapp_regex_demo.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title></title>
+    
+    <meta name="ocr-system" content="tesseract 5.3.0">
+    <meta name="ocr-capabilities" content="ocr_page ocr_carea ocr_par ocr_line ocrx_word ocrp_wconf">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<!-- scp dapp_regex_demo.html admin@47.103.92.193:/home/admin/tm/homepage/dist/dapp -->
+
+<body>
+
+    <h1>Discover Deeplink Test</h1>
+
+    <div class="rowContainer" style="font-size: 32px;">
+        <div class="rowContainer">
+            <input type="radio" id="option_okx" name="versionOptions" width="32px" height="32px" checked="">
+            <label for="option_okx">OKX</label>
+        </div>
+        <div class="rowContainer" style="margin-left: 40px;">
+            <input type="radio" id="option_okx_tr" name="versionOptions" width="32px" height="32px">
+            <label for="option_okx_tr">OKX-TR</label>
+        </div>
+
+        <div class="rowContainer" id="connect_btn" style="margin-left: 40px;">
+            <button onclick="connectWallet()">连接钱包</button>
+        </div>
+    </div>
+
+    <div>
+        <div style="margin-top: 20px; margin-bottom: 20px; color: brown;" id="blinks_container">我是OKX blink</div>
+
+        <!-- <div>
+            Fish": "🐠", "Shark": "🦈", "Squid": "🦑", "Whale": "🐋"
+        </div> -->
+    </div>
+    <!-- <ul>
+        <a class="link"
+            href="solana-action:https://actions.dialect.to/api/jupiter/swap/mSOL-SOL">solana-action:https://actions.dialect.to/api/jupiter/swap/mSOL-SOL</a>
+    </ul> -->
+
+    <div style="padding: 40px 32px 0px;">
+        <a class="link" href="http://www.baidu.com/" target="_blank">百度一下(测试target_blank)</a>
+    </div>
+
+    <ul>
+        <li>
+            <a class="deeplink" name="okxLinkId" href="okx://wallet/dapp">Discover首页</a>
+            <a class="deeplink hidden" name="trLinkId" href="okxtr://wallet/dapp">Discover首页</a>
+        </li>
+        <li>
+            <a class="deeplink" name="okxLinkId" href="okx://wallet/dapp/details?dappUrl=https://lido.fi/">DApp浏览器打开（切换Tab）</a>
+            <a class="deeplink hidden" name="trLinkId" href="okxtr://wallet/dapp/details?dappUrl=https://lido.fi/">DApp浏览器打开（切换Tab）</a>
+        </li>
+        <li>
+            <a class="deeplink" name="okxLinkId" href="okx://wallet/dapp/url?dappUrl=https%3A%2F%2Fwww.unemeta.com%2Fzh%2Fprojects%2Fanime">DApp浏览器打开（当前VC直接跳转）</a>
+            <a class="deeplink hidden" name="trLinkId" href="okxtr://wallet/dapp/url?dappUrl=https%3A%2F%2Fwww.unemeta.com%2Fzh%2Fprojects%2Fanime">DApp浏览器打开（当前VC直接跳转）</a>
+        </li>
+        <li>
+            <a class="deeplink" name="okxLinkId" href="okx://wallet/dapp?tabName=tab_featured">Discover首页【Featreud】</a>
+            <a class="deeplink hidden" name="trLinkId" href="okxtr://wallet/dapp?tabName=tab_featured">Discover首页【Featreud】</a>
+        </li>
+        <li>
+            <a class="deeplink" name="okxLinkId" href="okx://wallet/dapp?tabName=tab_cp">Discover首页【CP】</a>
+            <a class="deeplink hidden" name="trLinkId" href="okxtr://wallet/dapp?tabName=tab_cp">Discover首页【CP】</a>
+        </li>
+        <li>
+            <a class="deeplink" name="okxLinkId" href="okx://wallet/dapp?tabName=tab_event">Discover首页【event】</a>
+            <a class="deeplink hidden" name="trLinkId" href="okxtr://wallet/dapp?tabName=tab_event">Discover首页【event】</a>
+        </li>
+        <br>
+        <li>
+            <a class="deeplink" name="okxLinkId" href="okx://wallet/dapp?jumpType=direct&amp;page=event&amp;aniType=0">Discover Event首页</a>
+            <a class="deeplink hidden" name="trLinkId" href="okxtr://wallet/dapp?jumpType=direct&amp;page=event&amp;aniType=0">Discover
+                Event首页</a>
+        </li>
+        <li>
+            <a class="deeplink" name="okxLinkId" href="okx://wallet/dapp?jumpType=direct&amp;page=event_detail&amp;eventId=1536">Discover
+                Event详情</a>
+            <a class="deeplink hidden" name="trLinkId" href="okxtr://wallet/dapp?jumpType=direct&amp;page=event_detail&amp;eventId=1536">Discover
+                Event详情</a>
+        </li>
+        <li>
+            <a class="deeplink" name="okxLinkId" href="okx://wallet/dapp?jumpType=jump&amp;page=cryptopedia&amp;aniType=0">Cryptopedia落地页</a>
+            <a class="deeplink hidden" name="trLinkId" href="okxtr://wallet/dapp?jumpType=jump&amp;page=cryptopedia&amp;aniType=0">Cryptopedia落地页</a>
+        </li>
+        <li>
+            <a class="deeplink" name="okxLinkId" href="okx://wallet/dapp?jumpType=jump&amp;page=cryptopediaDetail&amp;chainId=324&amp;cryptopediaId=2">Cryptopedia某期详情页（直跳）</a>
+            <a class="deeplink hidden" name="trLinkId" href="okxtr://wallet/dapp?jumpType=jump&amp;page=cryptopediaDetail&amp;chainId=324&amp;cryptopediaId=2">Cryptopedia某期详情页（直跳）</a>
+        </li>
+
+        <li>
+            <a class="deeplink" name="okxLinkId" href="okx://wallet/dapp?jumpType=jump&amp;page=Ecosystemhub">Eco hub</a>
+            <a class="deeplink hidden" name="trLinkId" href="okxtr://wallet/dapp?jumpType=jump&amp;page=Ecosystemhub">Eco hub</a>
+        </li>
+    </ul>
+
+    <div class="dashed-line"></div>
+
+    <h1 style="margin-top: 50px;">动态匹配</h1>
+    <h2>研发测试case</h2>
+    <ul>
+        <li><a class="link" href="https://www.okx.com/cn/web3/marketplace/nft">NFT首页</a></li>
+        <li><a class="link" href="https://www.okx.com/cn/web3/marketplace/nft/asset/eth/0xe841e6e68becfc54b621a23a41f8c1a829a4cf44/6176">NFT详情</a>
+        </li>
+        <li><a class="link" href="https://www.okx.com/cn/web3/marketplace/inscription/ordinals/tokens">BRC20</a></li>
+        <li><a class="link" href="https://www.okx.com/cn/web3/marketplace/inscription/ordinals/token/ligo">BRC20详情</a>
+        </li>
+        <li><a class="link" href="https://www.okx.com/cn/web3/marketplace/launchpad">发行首页</a></li>
+        <li><a class="link" href="https://www.okx.com/cn/web3/marketplace/launchpad/event/nobody">发行</a></li>
+        <li><a class="link" href="https://www.okx.com/cn/web3/defi">Defi首页</a></li>
+        <li><a class="link" href="https://www.okx.com/cn/web3/toolkit/inscribe">Inscription</a></li>
+    </ul>
+
+    <h2 style="margin-top: 50px;">PM测试case</h2>
+    <ul>
+        <li><a class="link" href="https://www.okx.com/cn/web3/marketplace/launchpad/event/nobody">drops相关页面</a></li>
+        <li><a class="link" href="https://www.okx.com/cn/web3/hot/inscription">Inscription tool相关页面</a></li>
+
+        <li><a class="link" href="https://www.okx.com/cn/web3/dex-swap#inputChain=1&amp;inputCurrency=ETH&amp;outputChain=1&amp;outputCurrency=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48">Dex交易首页</a>
+        </li>
+        <li><a class="link" href="https://www.okx.com/cn/web3/defi">Defi首页</a></li>
+        <li><a class="link" href="https://www.okx.com/cn/web3/marketplace/nft">NFT首页</a></li>
+    </ul>
+    <script>
+        const radios = document.getElementsByName('versionOptions');
+        // Add an event listener to each radio button
+        radios.forEach(radio => {
+            radio.addEventListener('change', function () {
+                // Hide all links
+                const links = document.querySelectorAll('.deeplink');
+                console.log(links)
+
+                links.forEach(link => link.classList.add('hidden'));
+
+                // Show the link corresponding to the checked radio button
+                var showlinks = "";
+                if (this.id == "option_okx") {
+                    showlinks = "okxLinkId"
+                }
+
+                if (this.id == "option_okx_tr") {
+                    showlinks = "trLinkId"
+                }
+
+                const shownElements = document.getElementsByName(showlinks);
+                shownElements.forEach(element => element.classList.remove('hidden'));
+            });
+        });
+
+
+        function connectWallet() {
+            console.log("连接钱包（劫持之前的请求）");
+        }
+
+        var el = document.getElementById("connect_btn");
+        el.addEventListener("click", function () {
+            console.log('劫持之后的连接');
+        });
+    </script>
+
+
+
+
+
+<style>
+    li {
+        padding-top: 12px;
+        font-size: 24px;
+    }
+
+    /* 若要创建虚线或点线 */
+    .dashed-line {
+        border-style: dashed;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .rowContainer {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .deeplink {}
+
+    .link {}
+</style></body></html>
