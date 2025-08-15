@@ -1,1 +1,219 @@
-# testpage
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Base Account Quick-start</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f8f9fa;
+      }
+      
+      .container {
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      
+      h1 {
+        color: #0052ff;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      
+      .button-group {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+      }
+      
+      button {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        min-width: 180px;
+      }
+      
+      #signin {
+        background-color: #0052ff;
+        color: white;
+      }
+      
+      #signin:hover {
+        background-color: #0043cc;
+        transform: translateY(-2px);
+      }
+      
+      #pay {
+        background-color: #00d4aa;
+        color: white;
+      }
+      
+      #pay:hover {
+        background-color: #00b894;
+        transform: translateY(-2px);
+      }
+      
+      #status {
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 20px;
+        text-align: center;
+        font-weight: 500;
+        min-height: 20px;
+      }
+      
+      .success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+      
+      .error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+      
+      .info {
+        background-color: #d1ecf1;
+        color: #0c5460;
+        border: 1px solid #bee5eb;
+      }
+      
+      .user-info {
+        background-color: #e2e3e5;
+        color: #383d41;
+        border: 1px solid #d6d8db;
+        padding: 10px;
+        border-radius: 6px;
+        margin-top: 15px;
+        font-family: monospace;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Base Account Demo</h1>
+      
+      <div class="button-group">
+        <button id="signin">Sign in with Base</button>
+        <button id="pay">Pay with Base</button>
+      </div>
+      
+      <div id="status"></div>
+      <div id="userInfo" class="user-info" style="display: none;"></div>
+    </div>
+
+    <!-- Load Base Account SDK via CDN -->
+    <script src="https://unpkg.com/@base-org/account/dist/base-account.min.js"></script>
+    
+    <script>
+      // Initialize Base Account SDK with app configuration
+      const provider = window.createBaseAccountSDK({
+        appName: 'Base Account Quick-start',
+        appLogoUrl: 'https://base.org/logo.png',
+      }).getProvider();
+      
+      const statusDiv = document.getElementById("status");
+      const userInfoDiv = document.getElementById("userInfo");
+      let userAddress = null;
+
+      function showStatus(message, type = 'info') {
+        statusDiv.innerHTML = message;
+        statusDiv.className = type;
+      }
+
+      function showUserInfo(address) {
+        userInfoDiv.innerHTML = `Connected Address: ${address}`;
+        userInfoDiv.style.display = 'block';
+      }
+
+      // Generate a fresh nonce for authentication
+      function generateNonce() {
+        return window.crypto.randomUUID().replace(/-/g, '');
+      }
+
+      // Sign in with Base using wallet_connect method
+      document.getElementById("signin").onclick = async () => {
+        try {
+          showStatus("Connecting to Base Account...", 'info');
+          
+          // Generate a fresh nonce
+          const nonce = generateNonce();
+          
+          // Connect and authenticate using the new wallet_connect method
+          const { accounts } = await provider.request({
+            method: 'wallet_connect',
+            params: [{
+              version: '1',
+              capabilities: {
+                signInWithEthereum: { 
+                  nonce, 
+                  chainId: '0x2105' // Base Mainnet - 8453
+                }
+              }
+            }]
+          });
+          
+          const { address } = accounts[0];
+          const { message, signature } = accounts[0].capabilities.signInWithEthereum;
+          
+          userAddress = address;
+          showUserInfo(address);
+          
+          showStatus(`✅ Successfully signed in! Address: ${address.slice(0, 6)}...${address.slice(-4)}`, 'success');
+          
+          // In a real app, you would send the message and signature to your backend for verification
+          console.log('Authentication data:', { address, message, signature });
+          
+        } catch (error) {
+          console.error('Sign-in error:', error);
+          showStatus(`❌ Sign-in failed: ${error.message}`, 'error');
+        }
+      };
+
+      // One-tap USDC payment using window.base API (works with or without sign-in)
+      document.getElementById("pay").onclick = async () => {
+        try {
+          showStatus("Processing payment...", 'info');
+          
+          const payerInfo = {
+      requests: [{ type: 'email' }],
+    };
+          const result = await window.base.pay({
+            amount: "10.01", // USD – SDK quotes equivalent USDC
+            to: "0xc66e7270eAd1933435D5Abef3e45338D0e6507C8",
+            testnet: false, // set to false or omit for Mainnet
+            payerInfo
+          });
+
+          const status = await window.base.getPaymentStatus({
+            id: result.id,
+            testnet: false 
+          });
+          // 检查是否收集到用户信息
+          console.log('result:', result);
+          if (result.payerInfoResponses) {
+            console.log('Email:', result.payerInfoResponses.email);
+            console.log('Name:', result.payerInfoResponses.name);
+          }
+          showStatus(`🎉 Payment completed! Status: ${status.status}`, 'success');
+        } catch (error) {
+          showStatus(`❌ Payment failed: ${error.message}`, 'error');
+        }
+      };
+    </script>
+  </body>
+</html>
