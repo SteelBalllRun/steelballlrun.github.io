@@ -109,7 +109,8 @@
       
       <div class="button-group">
         <button id="signin">Sign in with Base</button>
-        <button id="pay">Pay with Base</button>
+        <button id="pay">Pay with Base (10USDC)</button>
+        <button id="payless">Pay with Base (0.001USDC)</button>
       </div>
       
       <div id="status"></div>
@@ -185,6 +186,36 @@
       };
 
       // One-tap USDC payment using window.base API (works with or without sign-in)
+      document.getElementById("payless").onclick = async () => {
+        try {
+          showStatus("Processing payment...", 'info');
+          
+          const payerInfo = {
+      requests: [{ type: 'email' }],
+    };
+          const result = await window.base.pay({
+            amount: "0.001", // USD – SDK quotes equivalent USDC
+            to: "0xc66e7270eAd1933435D5Abef3e45338D0e6507C8",
+            testnet: false, // set to false or omit for Mainnet
+            payerInfo
+          });
+
+          const status = await window.base.getPaymentStatus({
+            id: result.id,
+            testnet: false 
+          });
+          // 检查是否收集到用户信息
+          console.log('result:', result);
+          if (result.payerInfoResponses) {
+            console.log('Email:', result.payerInfoResponses.email);
+            console.log('Name:', result.payerInfoResponses.name);
+          }
+          showStatus(`🎉 Payment completed! Status: ${status.status}`, 'success');
+        } catch (error) {
+          showStatus(`❌ Payment failed: ${error.message}`, 'error');
+        }
+      };
+
       document.getElementById("pay").onclick = async () => {
         try {
           showStatus("Processing payment...", 'info');
